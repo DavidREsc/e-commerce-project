@@ -13,7 +13,7 @@ const sendTokenResponse = (user: IUser, statusCode: number, res: Response) => {
         secure: false
     }
 
-    if (process.env.NODE_ENV === 'production') options.secure = true
+    //if (process.env.NODE_ENV === 'production') options.secure = true
 
     res.status(statusCode)
        .cookie('token', token, options)
