@@ -1,91 +1,20 @@
 <template>
-<div class="hero">
-    <div class="hero__title">Landing Page</div>
-    <div class="cube"></div>
-    <div class="cube"></div>
-    <div class="cube"></div>
-    <div class="cube"></div>
-    <div class="cube"></div>
-    <div class="cube"></div>
+<div class="landing-page">
+        <h1 class="landing-page-title">Landing Page</h1>
 </div>
-
 </template>
 
-<style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Montserrat:700');
+<style lang="css">
+        .landing-page-title {
+                margin-top: 20%;
+        }
+  .landing-page {
+        display: flex;
+        justify-content: center;
+        color: black;
 
-.hero {
-  background-color: #080808;
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.hero__title {
-  color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 50px;
-  z-index: 1;
-}
-
-.cube {
-  position: absolute;
-  top: 80vh;
-  left: 45vw;
-  width: 10px;
-  height: 10px;
-  border: solid 1px darken(#999b9e, 8%);
-  transform-origin: top left;
-  transform: scale(0) rotate(0deg) translate(-50%, -50%);
-  animation: cube 12s ease-in forwards infinite;
-  
-  &:nth-child(2n) {
-    border-color: lighten(#b6b6b8, 10%);
+    height: 100vh;
+    background-color: #fefefe;
+    font-family: georgia, sans-serif;
   }
-  
-  &:nth-child(2) {
-    animation-delay: 1s;
-    left: 25vw;
-    top: 40vh;
-  }
-  
-  &:nth-child(3) {
-    animation-delay: 4s;
-    left: 75vw;
-    top: 50vh;
-  }
-  
-  &:nth-child(4) {
-    animation-delay: 6s;
-    left: 90vw;
-    top: 10vh;
-  }
-  
-  &:nth-child(5) {
-    animation-delay: 8s;
-    left: 10vw;
-    top: 85vh;
-  }
-  
-  &:nth-child(6) {
-    animation-delay: 10s;
-    left: 50vw;
-    top: 10vh;
-  }
-}
-
-@keyframes cube {
-  from {
-    transform: scale(0) rotate(0deg) translate(-50%, -50%);   
-    opacity: 1;
-  }
-  to {
-    transform: scale(20) rotate(960deg) translate(-50%, -50%); 
-    opacity: 0;
-  }
-}
 </style>
