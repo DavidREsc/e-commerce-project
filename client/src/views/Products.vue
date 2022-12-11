@@ -24,7 +24,9 @@ export default {
                 method: 'PUT',
                 quantity: 1
             })
-            this.clicked= false
+            setTimeout(() => {
+                this.clicked = false
+            }, 1500)
             activateDropDown(productImage, productTitle)
         }
     },
