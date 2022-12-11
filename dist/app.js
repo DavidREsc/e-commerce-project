@@ -63,7 +63,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 // Catch route
 app.get('/*', (req, res) => {
-    res.sendFile('/client/build/index.html', { root: __dirname });
+    res.sendFile('../client/build/index.html', { root: __dirname });
 });
 // Start server
 const server = app.listen(PORT, () => {
