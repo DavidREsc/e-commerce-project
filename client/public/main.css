@@ -1,0 +1,8 @@
+.nav {
+    display: flex;
+    width: 10000px;
+}
+
+.nav-btn {
+    background-color: red;
+}
