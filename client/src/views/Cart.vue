@@ -37,17 +37,18 @@
             
             async handlePayment() {
                 this.clicked = true
-                const products = toRaw(this.products)
-                const p = []
-                p.push({
-                    title: products.data.products[0].productId.title,
-                    price: products.data.products[0].productId.price,
-                    quantity: products.data.products[0].quantity
+                const productData = toRaw(this.products)
+                const products = productData.data.products.map(p => {
+                    return {
+                        title: p.productId.title,
+                        price: p.productId.price,
+                        quantity: p.quantity
+                    }
                 })
                 try {
                     const response = await axios.post('/api/v1/checkout', {
                         method: 'POST',
-                        products: p
+                        products
                     })
                     window.location = response.data.stripeSession
                 } catch (e) {
