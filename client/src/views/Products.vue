@@ -20,14 +20,19 @@ export default {
         },
         async addToCart(productId, productImage, productTitle) {
             this.clicked = true
-            const response = await axios.put(`/api/v1/carts/${productId}`, {
-                method: 'PUT',
-                quantity: 1
-            })
-            setTimeout(() => {
-                this.clicked = false
-                activateDropDown(productImage, productTitle)
-            }, 1000)
+            try {
+                const response = await axios.put(`/api/v1/carts/${productId}`, {
+                    method: 'PUT',
+                    quantity: 1
+                })
+                setTimeout(() => {
+                    this.clicked = false
+                    activateDropDown(productImage, productTitle)
+                }, 1000)
+            } catch(e) {
+                const code = e.response.status
+                if (code === 401) this.$router.push({name: 'cart'})
+            }
         }
     },
     created() {

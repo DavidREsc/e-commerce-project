@@ -26,12 +26,14 @@ export default {
                     method: 'PUT',
                     quantity: this.quantity
                 })
-                activateDropDown(this.product.data.image, this.product.data.title)
+                setTimeout(() => {
+                    this.clicked = false
+                    activateDropDown(this.product.data.image, this.product.data.title)
+                }, 1000)
             } catch (e) {
                 const code = e.response.status
                 if (code === 401) this.$router.push({name: 'cart'})
             }
-            this.clicked = false
         }
     },
     created() {
