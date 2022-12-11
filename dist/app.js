@@ -61,9 +61,10 @@ app.use(errorHandler_1.default);
 if (process.env.NODE_ENV === 'production') {
     app.use(express_1.default.static(path_1.default.join(__dirname, '../client/dist')));
 }
+console.log(__dirname + '../client/dist/index.html');
 // Catch route
 app.get('/*', (req, res) => {
-    res.sendFile('../client/dist/index.html', { root: __dirname });
+    res.sendFile(path_1.default.join(__dirname, '../client/dist/index.html'));
 });
 // Start server
 const server = app.listen(PORT, () => {
