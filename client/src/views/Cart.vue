@@ -4,29 +4,39 @@
             <h1 v-if="products" class="cart-title">{{(('Your Cart [' + products.data.products.length) + (products.data.products.length === 1 ? ' item]' : ' items]'))}}</h1>
             <CartListVue v-if="products" @update-quantity="updateQuantity($event)" @delete-item="deleteItem($event)" v-bind:items="products.data.products" />
             <CartDetailsVue v-if="(products)" v-bind:items="products.data.products"/>
-            <button v-if="(products && products.data.products.length)" @click="handlePayment" class="proceed-btn">Proceed to Payment</button>
+            <button v-if="(products && products.data.products.length)" @click="handlePayment" :class="clicked ? 'proceed-btn active' : 'proceed-btn'">
+                <LoadingSpinnerSmLt v-if="clicked"/>
+                Proceed to Payment
+            </button>
         </div>
+        <LoadingSpinner v-if="!products"/>
     </div>
 </template>
 
 <script>
     import CartListVue from '../components/CartList.vue'
     import CartDetailsVue from '../components/CartDetails.vue'
+    import LoadingSpinner from '../components/LoadingSpinner.vue'
+    import LoadingSpinnerSmLt from '../components/LoadingSpinnerSmLt.vue'
     import axios from 'axios'
     import { toRaw } from 'vue'
     export default {
         data() {
             return {
-                products: null
+                products: null,
+                clicked: false
             }
         },
         components: {
             CartListVue,
-            CartDetailsVue
+            CartDetailsVue,
+            LoadingSpinner,
+            LoadingSpinnerSmLt
         },
         methods: {
             
             async handlePayment() {
+                this.clicked = true
                 const products = toRaw(this.products)
                 const p = []
                 p.push({
@@ -43,6 +53,7 @@
                 } catch (e) {
                     console.log(e)
                 }
+                this.clicked = false
             },
 
             async updateQuantity(value) {

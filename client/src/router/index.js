@@ -5,13 +5,17 @@ const routes = [
     {path: '/products/:category', name: 'products', component: () => import('../views/Products.vue'), props: true},
     {path: '/products/:category/:id', name: 'product', component: () => import('../views/Product.vue'), props: true},
     {path: '/cart', name: 'cart', component: () => import('../views/Cart.vue'), 
-        beforeEnter() {
-            if (!store.user) {return {name: 'login'}
-        }        
+        beforeEnter(to, from) {
+            store.toRoute = to
+            if (!store.user) {return {name: 'login'}}        
     }},
     {path: '/orders', name: 'orders', component: () => import('../views/Orders.vue')},
     {path: '/register', name: 'register', component: () => import('../views/Register.vue')},
-    {path: '/login', name: 'login', component: () => import('../views/Login.vue')},
+    {path: '/login', name: 'login', component: () => import('../views/Login.vue'),
+        beforeEnter() {
+            if (store.user) {return {name: 'home'}}
+        }
+    },
     {path: '/', name: 'home', component: () => import('../views/Home.vue')},
     {path: '/:pathMatch(.*)*', name: 'notfound', component: () => import('../views/NotFound.vue')}
 ]

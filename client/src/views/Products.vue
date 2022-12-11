@@ -1,17 +1,16 @@
 <script>
 import axios from 'axios'
 import { activateDropDown } from '../store'
+import LoadingSpinner from '../components/LoadingSpinner.vue'
+import LoadingSpinnerSm from '../components/LoadingSpinnerSm.vue'
 export default {
     data () {
         return {
             products: null,
-            dropdown: {
-                active: false,
-                image: null,
-                title: null
-            }
+            clicked: false
         }
     },
+    components: {LoadingSpinner},
     props: ['category'],
     methods: {
         async initData() {
@@ -20,12 +19,12 @@ export default {
             console.log(response.data)
         },
         async addToCart(productId, productImage, productTitle) {
-            console.log(productId)
+            this.clicked = true
             const response = await axios.put(`/api/v1/carts/${productId}`, {
                 method: 'PUT',
                 quantity: 1
             })
-            console.log(response)
+            this.clicked= false
             activateDropDown(productImage, productTitle)
         }
     },
@@ -44,9 +43,12 @@ export default {
                     <img v-bind:src="product.image" class="product-img-sm"/>
                     <router-link :to="{name: 'product', params: {id: product._id}}" class="product-title">{{product.title}}</router-link>
                     <p class="product-price">{{'$' + product.price}}</p>
-                    <button class='add-to-cart-btn' @click="this.addToCart(product._id, product.image, product.title)">Add to Cart</button>
+                    <button :class="clicked ? 'add-to-cart-btn active' : 'add-to-cart-btn'" @click="this.addToCart(product._id, product.image, product.title)">
+                        Add to Cart
+                    </button>
                 </div>
             </div>
+            <LoadingSpinner v-if="!products"/>
         </div>
     </div>
 </template>

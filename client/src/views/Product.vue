@@ -1,13 +1,17 @@
 <script>
 import axios from 'axios'
 import { activateDropDown } from '../store'
+import LoadingSpinner from '../components/LoadingSpinner.vue'
+import LoadingSpinnerSm from '../components/LoadingSpinnerSm.vue'
 export default {
     data () {
         return {
             product: null,
             quantity: 1,
+            clicked: false
         }
     },
+    components: {LoadingSpinner, LoadingSpinnerSm},
     props: ['id'],
     methods: {
         async initData() {
@@ -16,11 +20,18 @@ export default {
             this.product = response.data
         },
         async addToCart() {
-            const response = await axios.put(`/api/v1/carts/${this.id}`, {
-                method: 'PUT',
-                quantity: this.quantity
-            })
-            activateDropDown(this.product.data.image, this.product.data.title)
+            this.clicked = true
+            try {
+                const response = await axios.put(`/api/v1/carts/${this.id}`, {
+                    method: 'PUT',
+                    quantity: this.quantity
+                })
+                activateDropDown(this.product.data.image, this.product.data.title)
+            } catch (e) {
+                const code = e.response.status
+                if (code === 401) this.$router.push({name: 'cart'})
+            }
+            this.clicked = false
         }
     },
     created() {
@@ -57,9 +68,13 @@ export default {
                             <option :value="10">10</option>
                         </select>
                     </div>
-                    <button @click="addToCart" class="add-to-cart-btn-lg">Add to Cart</button>
+                    <button @click="addToCart" :class="clicked ? 'add-to-cart-btn-lg active' : 'add-to-cart-btn-lg'">
+                        <LoadingSpinnerSm v-if="clicked"/>
+                        Add to Cart
+                    </button>
                 </div>
             </div>
         </div>
+        <LoadingSpinner v-if="!product"/>
     </div>
 </template>

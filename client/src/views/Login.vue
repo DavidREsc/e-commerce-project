@@ -23,7 +23,14 @@ export default {
                 const response = await axios.get(`/api/v1/auth/demo`)
                 console.log(response)
                 store.user = response.data.user
-                this.$router.push({name: 'home'})
+                
+                // Redirect to home page if nav guard wasn't visited
+                if (!store.toRoute) this.$router.push({name: 'home'})
+
+                // Redirect to target route user initially tried to visit
+                // Nav guard saves the target route in store
+                else this.$router.push(store.toRoute)
+                
             } catch (error) {
                 
             }

@@ -8,7 +8,8 @@ export const store = reactive({
         image: null,
         title: null
     },
-    loading: true
+    loading: true,
+    toRoute: null
 })
 
 export const activateDropDown = (image, title) => {

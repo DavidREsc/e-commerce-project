@@ -33,7 +33,7 @@
                     </div>
                     <div class="price-del-col">
                         <p class="total-price-mb">{{('$' + (item.productId.price * item.quantity).toFixed(2))}}</p>
-                        <button title='Delete item' class="delete-item-btn-sm"><v-icon name='co-delete' /></button>
+                        <button @click="deleteItem(item.productId._id)" title='Delete item' class="delete-item-btn-sm"><v-icon name='co-delete' /></button>
                     </div>
                 </td>
                 <td class="total-price-col">
