@@ -26,8 +26,8 @@ export default {
             })
             setTimeout(() => {
                 this.clicked = false
-            }, 1500)
-            activateDropDown(productImage, productTitle)
+                activateDropDown(productImage, productTitle)
+            }, 1000)
         }
     },
     created() {
