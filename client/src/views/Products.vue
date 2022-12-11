@@ -47,7 +47,7 @@ export default {
         <div class="view-container">
             <div v-if="products" class="products-container">
                 <div v-for="product in products.data" class="product-container">
-                    <img v-bind:src="product.image" class="product-img-sm"/>
+                    <router-link :to="{name: 'product', params: {id: product._id}}"><img v-bind:src="product.image" class="product-img-sm"/></router-link>
                     <router-link :to="{name: 'product', params: {id: product._id}}" class="product-title">{{product.title}}</router-link>
                     <p class="product-price">{{'$' + product.price}}</p>
                     <button :class="clicked ? 'add-to-cart-btn active' : 'add-to-cart-btn'" @click="this.addToCart(product._id, product.image, product.title)">
