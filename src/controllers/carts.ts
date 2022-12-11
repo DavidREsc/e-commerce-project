@@ -15,7 +15,6 @@ export const createCart = asyncHandler(async (req: IRequest, res: Response, next
 
 export const addItem = asyncHandler(async (req: IRequest, res: Response, next: NextFunction) => {
     let item
-    console.log(req.body.quantity)
 
     // Increment quantity of item if exists in cart
     item = await Cart.findOneAndUpdate({userId: req.user!._id, products: {$elemMatch: {productId: req.params.id}}},

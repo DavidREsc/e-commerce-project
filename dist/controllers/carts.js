@@ -27,7 +27,6 @@ exports.createCart = (0, asyncHandler_1.default)((req, res, next) => __awaiter(v
 }));
 exports.addItem = (0, asyncHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let item;
-    console.log(req.body.quantity);
     // Increment quantity of item if exists in cart
     item = yield Cart_1.default.findOneAndUpdate({ userId: req.user._id, products: { $elemMatch: { productId: req.params.id } } }, { $inc: { "products.$.quantity": req.body.quantity } }, {
         new: true,

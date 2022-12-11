@@ -14,7 +14,6 @@ interface IProductCheckout {
 type TProductTitles = { title: string[] }
 
 export const checkout = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body)
 
     // Get product titles from req.body.products and store in object
     const productTitles: TProductTitles = {"title": []}
@@ -53,10 +52,9 @@ export const checkout = asyncHandler(async (req: Request, res: Response, next: N
                 quantity: product.quantity
             }
         }),
-        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/` : '/',
-        cancel_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/cart` : '/cart'
+        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/` : `${process.env.PRODUCTION_URL}/`,
+        cancel_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/cart` : `${process.env.PRODUCTION_URL}/cart`
     })
-    console.log("Creating session", session.url)
 
     // Return checkout session url
     res.status(200).json({

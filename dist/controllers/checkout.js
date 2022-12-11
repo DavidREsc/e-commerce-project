@@ -18,7 +18,6 @@ const Product_1 = __importDefault(require("../models/Product"));
 const errorResponse_1 = __importDefault(require("../utils/errorResponse"));
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 exports.checkout = (0, asyncHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     // Get product titles from req.body.products and store in object
     const productTitles = { "title": [] };
     const titles = [];
@@ -53,10 +52,9 @@ exports.checkout = (0, asyncHandler_1.default)((req, res, next) => __awaiter(voi
                 quantity: product.quantity
             };
         }),
-        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/` : '/',
-        cancel_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/cart` : '/cart'
+        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/` : `${process.env.PRODUCTION_URL}/`,
+        cancel_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/cart` : `${process.env.PRODUCTION_URL}/cart`
     });
-    console.log("Creating session", session.url);
     // Return checkout session url
     res.status(200).json({
         success: true,
