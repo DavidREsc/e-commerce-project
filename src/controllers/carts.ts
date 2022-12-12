@@ -66,3 +66,16 @@ export const getCart = asyncHandler(async (req: IRequest, res: Response, next: N
         data: cart
     })
 })
+
+export const deleteCart = asyncHandler(async (req: IRequest, res: Response, next: NextFunction) => {
+    const cart = await Cart.findOneAndUpdate({userId: req.user!._id},
+        {$set: {products: []}}, {
+            new: true,
+            runValidators: true
+        })
+    if (!cart) next(new ErrorResponse(`Cart not found for user id ${req.user!._id}`, 404))
+    res.status(200).json({
+        success: true,
+        data: cart
+    })
+})

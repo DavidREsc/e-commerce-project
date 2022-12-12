@@ -75,7 +75,6 @@
         async created() {
             const response = await axios.get('/api/v1/carts')
             this.products = response.data
-            console.log(response.data)
         }
     }
 </script>

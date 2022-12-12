@@ -7,7 +7,8 @@ export default {
     data () {
         return {
             products: null,
-            clicked: false
+            clicked: false,
+            loading: true
         }
     },
     components: {LoadingSpinner},
@@ -16,7 +17,16 @@ export default {
         async initData() {
             const response = await axios.get(`/api/v1/products?categories=${this.category}`)
             this.products = response.data
-            console.log(response.data)
+            const images = response.data.data.map(data => {
+                return new Promise((resolve, reject) => {
+                    const img  = new Image()
+                    img.src = data.image
+                    img.onload = resolve
+                    img.onerror = reject
+                })
+            })
+            Promise.all(images).then(() => this.loading = false)
+                .catch((e) => console.log(e))
         },
         async addToCart(productId, productImage, productTitle) {
             this.clicked = true
@@ -45,7 +55,7 @@ export default {
 <template>
     <div>
         <div class="view-container">
-            <div v-if="products" class="products-container">
+            <div v-if="!loading" class="products-container">
                 <div v-for="product in products.data" class="product-container">
                     <router-link :to="{name: 'product', params: {id: product._id}}"><img v-bind:src="product.image" class="product-img-sm"/></router-link>
                     <router-link :to="{name: 'product', params: {id: product._id}}" class="product-title">{{product.title}}</router-link>
@@ -55,7 +65,7 @@ export default {
                     </button>
                 </div>
             </div>
-            <LoadingSpinner v-if="!products"/>
+            <LoadingSpinner v-if="loading"/>
         </div>
     </div>
 </template>
