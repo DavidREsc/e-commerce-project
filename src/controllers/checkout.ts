@@ -53,7 +53,7 @@ export const checkout = asyncHandler(async (req: Request, res: Response, next: N
                 quantity: product.quantity
             }
         }),
-        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/order/success/{CHECKOUT_SESSION_ID}` : `${process.env.PRODUCTION_URL}/l`,
+        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/order/success/{CHECKOUT_SESSION_ID}` : `${process.env.PRODUCTION_URL}/order/success/{CHECKOUT_SESSION_ID}`,
         cancel_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/cart` : `${process.env.PRODUCTION_URL}/cart`
     })
 
