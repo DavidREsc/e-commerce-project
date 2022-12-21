@@ -19,7 +19,9 @@ const routes = [
     {path: '/', name: 'home', component: () => import('../views/Home.vue')},
     {path: '/order/success/:session_id', name: 'order_success', component: () => import('../views/OrderSuccess.vue'),
         async beforeEnter(to) {
+            console.log('Order success page')
             const session = await getPaymentSession(to.params.session_id)
+            console.log(session)
             if (!session) {return {name: 'home'}}
         }
     },
@@ -38,7 +40,6 @@ const router = createRouter({
 router.beforeEach(async () => {
     if (store.loading) {
         await getMe()
-        console.log('loading')
     }
 })
 
