@@ -20,6 +20,7 @@ const routes = [
     {path: '/order/success/:session_id', name: 'order_success', component: () => import('../views/OrderSuccess.vue'),
         async beforeEnter(to) {
             console.log('Order success page')
+            console.log(to.params.session_id)
             const session = await getPaymentSession(to.params.session_id)
             console.log(session)
             if (!session) {return {name: 'home'}}
