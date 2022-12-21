@@ -53,7 +53,7 @@ export const checkout = asyncHandler(async (req: Request, res: Response, next: N
                 quantity: product.quantity
             }
         }),
-        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/order/success/{CHECKOUT_SESSION_ID}` : `${process.env.PRODUCTION_URL}/l`,
+        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/order/success/{CHECKOUT_SESSION_ID}` : `${process.env.PRODUCTION_URL}/order/success/{CHECKOUT_SESSION_ID}`,
         cancel_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/cart` : `${process.env.PRODUCTION_URL}/cart`
     })
 
@@ -66,7 +66,7 @@ export const checkout = asyncHandler(async (req: Request, res: Response, next: N
 
 export const getPaymentSession = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const sessionId = req.params.id
-    console.log(sessionId)
+    console.log("Session id: " + sessionId)
     // Retrieve stripe session
     const session = await stripe.checkout.sessions.retrieve(sessionId)
     // No session found
