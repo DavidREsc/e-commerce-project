@@ -41,6 +41,7 @@ export const getPaymentSession = (session_id) => {
             console.log(response)
             resolve(true)
         } catch (error) {
+            console.log(error)
             resolve(false)
         }
     })
