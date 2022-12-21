@@ -3,11 +3,11 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
-import {FaBars, FaShoppingCart, CoDelete} from 'oh-vue-icons/icons'
+import {FaBars, FaShoppingCart, CoDelete, IoCheckmarkDoneCircleSharp} from 'oh-vue-icons/icons'
 import { plugin, defaultConfig } from '@formkit/vue'
 import '@formkit/themes/genesis'
 
-addIcons(FaBars, FaShoppingCart, CoDelete)
+addIcons(FaBars, FaShoppingCart, CoDelete, IoCheckmarkDoneCircleSharp)
 
 const app = createApp(App)
 app.component("v-icon", OhVueIcon)

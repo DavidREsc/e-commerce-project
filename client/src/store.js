@@ -34,3 +34,15 @@ export const getMe = () => {
     })
 }
 
+export const getPaymentSession = (session_id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios.get(`/api/v1/checkout/${session_id}`)
+            console.log(response)
+            resolve(true)
+        } catch (error) {
+            resolve(false)
+        }
+    })
+}
+

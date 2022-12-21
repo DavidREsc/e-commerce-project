@@ -11,10 +11,10 @@
   .landing-page {
         display: flex;
         justify-content: center;
-        color: black;
+        color: #fefefefe;
 
     height: 100vh;
-    background-color: #fefefe;
+    background-color: #333;
     font-family: georgia, sans-serif;
   }
 </style>

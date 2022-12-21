@@ -1,9 +1,12 @@
 <template>
     <header>
         <div class="title">
-            <router-link class='title' @click="this.closeMenu" :to="{name: 'home'}">Store</router-link>
+            <router-link class='title' @click="this.closeMenu" :to="{name: 'home'}">Departlux</router-link>
             <router-link title='Cart' class="cart" @click="this.closeMenu" :to="{name: 'cart'}">
                 <v-icon name="fa-shopping-cart" scale="1.5" />
+            </router-link>
+            <router-link  @click="this.closeMenu" :class="store.user ? 'nav-btn-login' : 'nav-btn-login active'" :to="{name: 'login'}">
+                    Login
             </router-link>
         </div>
         <div class="nav">
@@ -20,8 +23,8 @@
                 <router-link  @click="this.closeMenu" class="nav-btn" :to="{name: 'products', params: {category: 'women\'s clothing'}}">
                     Women's Clothing
                 </router-link>
-                <router-link  @click="this.closeMenu" :class="store.user ? 'nav-btn-login' : 'nav-btn-login active'" :to="{name: 'login'}">
-                    Login
+                <router-link :to="{name: 'cart'}" class="nav-btn">
+                    Cart
                 </router-link>
             </div>
         </div>

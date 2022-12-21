@@ -15,8 +15,8 @@
                     this.subTotal += item.productId.price * item.quantity
                 })
                 this.subTotal = parseFloat(this.subTotal).toFixed(2)
-                this.salesTax = parseFloat((this.subTotal * this.tax)).toFixed(2)
-                this.grandTotal = parseFloat((this.subTotal + this.salesTax)).toFixed(2)
+                this.salesTax = (this.subTotal * this.tax).toFixed(2)
+                this.grandTotal = (parseFloat(this.subTotal) + parseFloat(this.salesTax)).toFixed(2)
             }
         },
         watch: {

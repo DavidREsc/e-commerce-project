@@ -40,6 +40,7 @@ export const checkout = asyncHandler(async (req: Request, res: Response, next: N
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
+        invoice_creation: {enabled: true},
         line_items: req.body.products.map((product: IProductCheckout) => {
             return {
                 price_data: {
@@ -52,7 +53,7 @@ export const checkout = asyncHandler(async (req: Request, res: Response, next: N
                 quantity: product.quantity
             }
         }),
-        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/` : `${process.env.PRODUCTION_URL}/`,
+        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/order/success/{CHECKOUT_SESSION_ID}` : `${process.env.PRODUCTION_URL}/order/success/{CHECKOUT_SESSION_ID}`,
         cancel_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/cart` : `${process.env.PRODUCTION_URL}/cart`
     })
 
@@ -61,6 +62,20 @@ export const checkout = asyncHandler(async (req: Request, res: Response, next: N
         success: true,
         stripeSession: session.url
     })
+})
+
+export const getPaymentSession = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const sessionId = req.params.id
+    console.log(sessionId)
+    // Retrieve stripe session
+    const session = await stripe.checkout.sessions.retrieve(sessionId)
+    // No session found
+    if (!session) next(new ErrorResponse(`Stripe session with id of ${sessionId} not found`, 404))
+    res.status(200).json({
+      success: true,
+      stripeSession: session
+    })
+
 })
 
 
