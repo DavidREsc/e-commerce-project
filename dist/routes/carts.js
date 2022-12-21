@@ -6,7 +6,8 @@ const auth_1 = require("../middleware/auth");
 const router = (0, express_1.Router)();
 router.route('/')
     .post(auth_1.protect, carts_1.createCart)
-    .get(auth_1.protect, carts_1.getCart);
+    .get(auth_1.protect, carts_1.getCart)
+    .delete(auth_1.protect, carts_1.deleteCart);
 router.route('/:id')
     .put(auth_1.protect, carts_1.addItem)
     .delete(auth_1.protect, carts_1.deleteItem);

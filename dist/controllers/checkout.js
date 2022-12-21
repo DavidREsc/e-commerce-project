@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkout = void 0;
+exports.getPaymentSession = exports.checkout = void 0;
 const asyncHandler_1 = __importDefault(require("../middleware/asyncHandler"));
 const Product_1 = __importDefault(require("../models/Product"));
 const errorResponse_1 = __importDefault(require("../utils/errorResponse"));
@@ -40,6 +40,7 @@ exports.checkout = (0, asyncHandler_1.default)((req, res, next) => __awaiter(voi
     const session = yield stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
+        invoice_creation: { enabled: true },
         line_items: req.body.products.map((product) => {
             return {
                 price_data: {
@@ -52,13 +53,26 @@ exports.checkout = (0, asyncHandler_1.default)((req, res, next) => __awaiter(voi
                 quantity: product.quantity
             };
         }),
-        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/` : `${process.env.PRODUCTION_URL}/`,
+        success_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/order/success/{CHECKOUT_SESSION_ID}` : `${process.env.PRODUCTION_URL}/order/success/{CHECKOUT_SESSION_ID}`,
         cancel_url: process.env.NODE_ENV === 'development' ? `${process.env.CLIENT_URL}/cart` : `${process.env.PRODUCTION_URL}/cart`
     });
     // Return checkout session url
     res.status(200).json({
         success: true,
         stripeSession: session.url
+    });
+}));
+exports.getPaymentSession = (0, asyncHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const sessionId = req.params.id;
+    console.log("Session id: " + sessionId);
+    // Retrieve stripe session
+    const session = yield stripe.checkout.sessions.retrieve(sessionId);
+    // No session found
+    if (!session)
+        next(new errorResponse_1.default(`Stripe session with id of ${sessionId} not found`, 404));
+    res.status(200).json({
+        success: true,
+        stripeSession: session
     });
 }));
 /*const endpointSecret = 'whsec_138f55fc3a6f3c16e493e89babb493dba826bee3eacc6e21fdc4fbe2aaf62642'

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCart = exports.deleteItem = exports.addItem = exports.createCart = void 0;
+exports.deleteCart = exports.getCart = exports.deleteItem = exports.addItem = exports.createCart = void 0;
 const asyncHandler_1 = __importDefault(require("../middleware/asyncHandler"));
 const Cart_1 = __importDefault(require("../models/Cart"));
 const errorResponse_1 = __importDefault(require("../utils/errorResponse"));
@@ -68,6 +68,18 @@ exports.getCart = (0, asyncHandler_1.default)((req, res, next) => __awaiter(void
         path: 'products.productId',
         select: ['title', 'price', 'image', 'categories']
     });
+    res.status(200).json({
+        success: true,
+        data: cart
+    });
+}));
+exports.deleteCart = (0, asyncHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const cart = yield Cart_1.default.findOneAndUpdate({ userId: req.user._id }, { $set: { products: [] } }, {
+        new: true,
+        runValidators: true
+    });
+    if (!cart)
+        next(new errorResponse_1.default(`Cart not found for user id ${req.user._id}`, 404));
     res.status(200).json({
         success: true,
         data: cart
