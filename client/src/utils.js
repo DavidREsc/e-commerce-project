@@ -37,9 +37,7 @@ export const getMe = () => {
 export const getPaymentSession = (session_id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log('getpaymentsession ' + session_id)
             const response = await axios.get(`/api/v1/checkout/${session_id}`)
-            console.log(response)
             resolve(true)
         } catch (error) {
             console.log(error)

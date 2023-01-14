@@ -1,11 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import { store, getMe, getPaymentSession } from '../store.js'
+import { store, getMe, getPaymentSession } from '../utils.js'
 
 const routes = [
     {path: '/products/:category', name: 'products', component: () => import('../views/Products.vue'), props: true},
     {path: '/products/:category/:id', name: 'product', component: () => import('../views/Product.vue'), props: true},
     {path: '/cart', name: 'cart', component: () => import('../views/Cart.vue'), 
-        beforeEnter(to, from) {
+        beforeEnter(to) {
             store.toRoute = to
             if (!store.user) {return {name: 'login'}}        
     }},
@@ -19,10 +19,7 @@ const routes = [
     {path: '/', name: 'home', component: () => import('../views/Home.vue')},
     {path: '/order/success/:session_id', name: 'order_success', component: () => import('../views/OrderSuccess.vue'),
         async beforeEnter(to) {
-            console.log('Order success page')
-            console.log(to.params.session_id)
             const session = await getPaymentSession(to.params.session_id)
-            console.log(session)
             if (!session) {return {name: 'home'}}
         }
     },

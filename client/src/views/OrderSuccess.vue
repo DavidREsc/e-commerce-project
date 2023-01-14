@@ -1,5 +1,5 @@
 <script>
-import {store} from '../store.js'
+import {store} from '../utils.js'
 import axios from 'axios'
 export default {
     data() {

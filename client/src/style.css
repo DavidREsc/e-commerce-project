@@ -125,7 +125,17 @@ header {
   text-align: center;
   margin: auto;
   height: 270px;
+  width: 250px;
+  cursor: pointer;
+  justify-content: center;
+  text-decoration: none;
 
+
+}
+
+.product-container:hover {
+  border-radius: 20px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .product-img-sm {
@@ -133,6 +143,43 @@ header {
   height: 200px;
   padding: 1rem;
 }
+
+.product-img-sm-loading {
+  width: 200px;
+  height: 200px;
+  padding: 1rem;
+  background: rgba(0,0,0,.3);
+  background-image: linear-gradient(
+    120deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0) 40%,
+    rgba(255,255,255,0.8) 50%, 
+    rgba(255,255,255,0) 60%,
+    rgba(255,255,255,0) 100%
+  );
+  background-position-x: -100vw;
+  background-repeat: no-repeat;
+  animation: shiny 1.5s infinite;
+}
+
+@keyframes shiny {
+  0% {
+    background-position-x: -100vw;
+  }
+  25% {
+    background-position-x: 7vw;
+  }
+  50% {
+    background-position-x: 10vw;
+  }
+  75% {
+    background-position-x: 10vw;
+  }
+  100% {
+    background-position-x: 10vw;
+  }
+}
+
 
 .product-img-lg {
   width: 500px;
@@ -199,6 +246,10 @@ header {
   width: 100%;
   display: flex;
   margin-top: 25px;
+}
+
+.product-price {
+  color: black;
 }
 
 .add-to-cart-btn-lg {
@@ -615,7 +666,7 @@ li:last-child {
 @media only screen and (min-width: 320px) {
 
   .products-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     grid-auto-rows: 350px;
     gap: 5px;
     font-size: 12px;
@@ -751,6 +802,12 @@ li:last-child {
 }
 
 @media only screen and (min-width: 641px) {
+  .products-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 350px;
+    gap: 5px;
+    font-size: 12px;
+  }
   .product-info {
     margin-top: 50px;
   }
@@ -1008,6 +1065,13 @@ li:last-child {
     row-gap: 100px;
     column-gap: 200px;
   }
+  .product-title {
+    font-size: 17px;
+  }
+  .product-price {
+    font-size: 17px;
+    text-decoration: none;
+  }
 }
 
 @media only screen and (min-width: 3000px) {
@@ -1035,6 +1099,10 @@ li:last-child {
   }
 
   .product-img-sm {
+    width: 220px;
+    height: 220px;
+  }
+  .product-img-sm-loading {
     width: 220px;
     height: 220px;
   }

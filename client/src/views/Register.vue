@@ -6,7 +6,7 @@
 
 <script>
     import axios from 'axios'
-    import { store } from '../store'
+    import { store } from '../utils'
     export default {
         async created() {
             const response = await axios.post('/api/v1/auth/register', {

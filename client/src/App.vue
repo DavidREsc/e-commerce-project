@@ -1,7 +1,7 @@
 <script>
 import NavBar from './components/NavBar.vue'
 import AddedToCartVue from './components/AddedToCart.vue';
-import { store } from './store';
+import { store } from './utils';
 export default {
     data() {
         return {

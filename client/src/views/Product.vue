@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios'
-import { activateDropDown } from '../store'
+import { activateDropDown } from '../utils'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
 import LoadingSpinnerSm from '../components/LoadingSpinnerSm.vue'
 export default {
@@ -15,14 +15,13 @@ export default {
     props: ['id'],
     methods: {
         async initData() {
-            console.log(this.id)
             const response = await axios.get(`/api/v1/products/${this.id}`)
             this.product = response.data
         },
         async addToCart() {
             this.clicked = true
             try {
-                const response = await axios.put(`/api/v1/carts/${this.id}`, {
+                await axios.put(`/api/v1/carts/${this.id}`, {
                     method: 'PUT',
                     quantity: this.quantity
                 })
