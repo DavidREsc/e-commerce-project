@@ -5,18 +5,22 @@ const routes = [
     {path: '/products/:category', name: 'products', component: () => import('../views/Products.vue'), props: true},
     {path: '/products/:category/:id', name: 'product', component: () => import('../views/Product.vue'), props: true},
     {path: '/cart', name: 'cart', component: () => import('../views/Cart.vue'), 
-        beforeEnter(to) {
-            store.toRoute = to
+        beforeEnter(to, from) {
             if (!store.user) {return {name: 'login'}}        
     }},
     {path: '/orders', name: 'orders', component: () => import('../views/Orders.vue')},
     {path: '/register', name: 'register', component: () => import('../views/Register.vue')},
     {path: '/login', name: 'login', component: () => import('../views/Login.vue'),
-        beforeEnter() {
+        beforeEnter(to, from) {
+            store.toRoute = from
             if (store.user) {return {name: 'home'}}
         }
     },
-    {path: '/', name: 'home', component: () => import('../views/Home.vue')},
+    {path: '/', name: 'home', component: () => import('../views/Home.vue'), 
+        beforeEnter() {
+            return {path: '/products/electronics'}
+        }
+    },
     {path: '/order/success/:session_id', name: 'order_success', component: () => import('../views/OrderSuccess.vue'),
         async beforeEnter(to) {
             const session = await getPaymentSession(to.params.session_id)

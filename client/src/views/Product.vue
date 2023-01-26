@@ -31,7 +31,7 @@ export default {
                 }, 1000)
             } catch (e) {
                 const code = e.response.status
-                if (code === 401) this.$router.push({name: 'cart'})
+                if (code === 401) this.$router.push({name: 'login'})
             }
         }
     },

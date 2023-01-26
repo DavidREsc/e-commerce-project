@@ -1,7 +1,7 @@
 <template>
     <header>
         <div class="title">
-            <router-link class='title' @click="this.closeMenu" :to="{name: 'home'}">Departlux</router-link>
+            <router-link class='title' @click="this.closeMenu" :to="{name: 'home'}">E-Comm</router-link>
             <router-link title='Cart' class="cart" @click="this.closeMenu" :to="{name: 'cart'}">
                 <v-icon name="fa-shopping-cart" scale="1.5" />
             </router-link>

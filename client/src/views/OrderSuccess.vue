@@ -25,7 +25,7 @@ export default {
         <p class="success-notification">{{"Thank you for your purchase! An email receipt including " +
             "the details about your order has been sent to " + user.email}}
         </p>
-        <h3 class="success-storename">Departlux</h3>
+        <h3 class="success-storename">E-Comm</h3>
     </div>
 </template>
 
